@@ -2,47 +2,82 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
-    android:background="#131313"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:background="#131313">
 
-    <ImageView
-        android:id="@+id/logo"
-        android:layout_width="134dp"
-        android:layout_height="52dp"
-        android:src="@drawable/group_1"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="69dp"
+        android:background="#131313"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.541"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.04" />
+        app:layout_constraintVertical_bias="0.00">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#131313">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="14dp">
+
+                <ImageView
+                    android:id="@+id/logo"
+                    android:layout_width="134dp"
+                    android:layout_height="52dp"
+                    android:src="@drawable/group_1"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.46"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.5" />
+
+                <ImageView
+                    android:id="@+id/rules"
+                    android:layout_width="33dp"
+                    android:layout_height="33dp"
+                    android:src="@drawable/question_svgrepo_com"
+                    app:layout_constraintBottom_toBottomOf="@+id/logo"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.9"
+                    app:layout_constraintStart_toEndOf="@+id/logo"
+                    app:layout_constraintTop_toTopOf="@+id/logo"
+                    app:layout_constraintVertical_bias="0.6" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
 
     <FrameLayout
         android:id="@+id/total_attempts_cont"
         android:layout_width="123.93dp"
         android:layout_height="123.93dp"
-        android:layout_marginTop="36dp"
         android:background="@drawable/container_shape"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.125"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logo"
-        app:layout_constraintVertical_bias="0.0" >
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
+        app:layout_constraintVertical_bias="0.05">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="match_parent">
 
             <TextView
                 android:id="@+id/total_attempts_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Total attempts"
                 android:fontFamily="@font/aldrich_regular"
+                android:text="Total attempts"
                 android:textAllCaps="true"
                 android:textColor="@color/white"
                 android:textSize="11sp"
@@ -473,6 +508,7 @@
         app:layout_constraintVertical_bias="0.717"
         app:lottie_autoPlay="true"
         app:lottie_rawRes="@raw/lose" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Guess My Number</string>
+    <string name="rules">1. You have 5 trials and you have to guess the correct number from the list of six given numbers.\n\n2. You have total 100 points and 10 points will be deducted each time you make a wrong guess.\n\n3. You can use hint button for hints but if used 30 points will be deducted</string>
+    <string name="open_drawer">Open navigation drawer</string>
+    <string name="close_drawer">Close navigation drawer</string>
 </resources>

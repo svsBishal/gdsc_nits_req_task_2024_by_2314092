@@ -1,9 +1,13 @@
 package com.example.guessmynumber;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -11,22 +15,27 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
+
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.google.android.material.navigation.NavigationView;
 
 import java.util.Random;
+
 
 public class MainActivity extends AppCompatActivity {
 
     TextView points_rem_num, attempts_left_num, result_text, hint_text, points_text, total_attempts_text, total_left_text, total_attempts_num;
-    ImageView logo;
+    ImageView logo, three_line, rules;
     TextView[] options;
     int[] option_number;
     EditText editText;
@@ -36,6 +45,9 @@ public class MainActivity extends AppCompatActivity {
     boolean isHintUsed;
     Drawable logo_white, gold_logo;
     LottieAnimationView animation;
+    Toolbar toolbar;
+    DrawerLayout drawerLayout;
+    NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +64,10 @@ public class MainActivity extends AppCompatActivity {
         total_attempts_text = findViewById(R.id.total_attempts_text);
         total_left_text = findViewById(R.id.total_left_text);
         total_attempts_num = findViewById(R.id.total_attempts_num);
+        rules = findViewById(R.id.rules);
+        toolbar = findViewById(R.id.toolbar);
+        drawerLayout = findViewById(R.id.drawer);
+        navigationView = findViewById(R.id.navigation_draw);
 
         animation = findViewById(R.id.l_anim);
 
@@ -90,12 +106,12 @@ public class MainActivity extends AppCompatActivity {
         hints_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(attempts_left_count == 0) {
+                    hint_text.setText("Game is over\nStart a new game");
+                }
                 if(isHintUsed) {
                     Toast.makeText(MainActivity.this, "You can't use hint option twice", Toast.LENGTH_SHORT).show();
                     return;
-                }
-                if(attempts_left_count == 0) {
-                    hint_text.setText("Game is over\nStart a new game?");
                 } else {
 
                     AlertDialog.Builder hintAlert = new AlertDialog.Builder(MainActivity.this);
@@ -107,6 +123,7 @@ public class MainActivity extends AppCompatActivity {
                         public void onClick(DialogInterface dialog, int which) {
                             points_remaining_count = points_remaining_count - 30;
                             points_rem_num.setText(String.valueOf(points_remaining_count));
+                            points_text.setText("points remaining");
                             makeHints();
                             isHintUsed = true;
                         }
@@ -114,12 +131,66 @@ public class MainActivity extends AppCompatActivity {
                     });
 
                     hintAlert.setNegativeButton("No", null);
-
                     hintAlert.show();
                 }
             }
         });
+
+        rules.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder rulesBox = new AlertDialog.Builder(MainActivity.this);
+                rulesBox.setTitle("Rules");
+                rulesBox.setMessage(R.string.rules);
+                rulesBox.setPositiveButton("Got it", null);
+                rulesBox.show();
+            }
+        });
+
+        setSupportActionBar(toolbar);
+        if(getSupportActionBar() != null) {
+            ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(
+                    MainActivity.this,
+                    drawerLayout, toolbar,
+                    R.string.open_drawer,
+                    R.string.close_drawer
+            );
+            drawerLayout.addDrawerListener(actionBarDrawerToggle);
+            actionBarDrawerToggle.syncState();
+
+            navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                    String url = null;
+                    int id = menuItem.getItemId();
+
+                    if (id == R.id.linked_in) {
+                        url = "https://www.linkedin.com/in/bishal-sarma-41a9b128a?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app";
+                    } else if (id == R.id.insta_gram) {
+                        url = "https://www.instagram.com/___b1shal_svs";
+                    } else if (id == R.id.face_book) {
+                        url = "https://www.facebook.com/vishal.jimon?mibextid=ZbWKwL";
+                    } else if (id == R.id.git_hub) {
+                        url = "https://github.com/svsBishal";
+                    } else {
+                        url = "https://drive.google.com/file/d/1Snf2ZY6cTbSsI3JcawRezYwbA0LkYXK7/view?usp=drivesdk";
+                    }
+
+                    if (url != null) {
+                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setData(Uri.parse(url));
+                        startActivity(intent);
+                    }
+
+                    drawerLayout.closeDrawer(GravityCompat.START);
+                    return true;
+                }
+            });
+
+        }
+
     }
+
 
     private void startNewGame() {
         // Set initial number of attempts
@@ -145,7 +216,8 @@ public class MainActivity extends AppCompatActivity {
         points_rem_num.setText(String.valueOf(points_remaining_count));
         total_attempts_num.setText(String.valueOf(5));
 
-        points_text.setText("points remaining");
+        editText.setText("");
+        points_text.setText("total points");
         total_attempts_text.setText("total attempts");
         total_left_text.setText("attempts left");
 
@@ -296,6 +368,11 @@ public class MainActivity extends AppCompatActivity {
             setAnimation(R.raw.win);
 
         }
+
+        if(attempts_left_count != 0 && attempts_left_count != 5) {
+            points_text.setText("points remaining");
+            editText.setText("");
+        }
     }
 
     private void makeHints() {
@@ -341,8 +418,9 @@ public class MainActivity extends AppCompatActivity {
             exitDailog.setNegativeButton("No", null);
 
             exitDailog.show();
-        }
-        else {MainActivity.super.onBackPressed();}
+        } else if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        } else {MainActivity.super.onBackPressed();}
     }
 
 }

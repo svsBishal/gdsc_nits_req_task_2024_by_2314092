@@ -31,8 +31,6 @@ public class SplashScreen extends AppCompatActivity {
         Animation logo_anim = AnimationUtils.loadAnimation(SplashScreen.this,R.anim.logo);
         logo.setAnimation(logo_anim);
 
-
-        // Delaying for 3 seconds before starting MainActivity
         new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
             @Override
             public void run() {

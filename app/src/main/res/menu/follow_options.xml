@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:id="@+id/group_1" >
+        <item
+            android:id="@+id/linked_in"
+            android:title="LinkedIn"
+            android:icon="@drawable/linkedin_svgrepo_com"/>
+
+        <item
+            android:id="@+id/insta_gram"
+            android:title="Instagram"
+            android:icon="@drawable/instagram_167_svgrepo_com"/>
+
+        <item
+            android:id="@+id/face_book"
+            android:title="Facebook"
+            android:icon="@drawable/facebook_svgrepo_com" />
+
+        <item
+            android:id="@+id/git_hub"
+            android:title="GitHub"
+            android:icon="@drawable/github_142_svgrepo_com" />
+    </group>
+
+    <group android:id="@+id/group_2">
+        <item
+            android:id="@+id/re_sume"
+            android:title="My Resume"
+            android:icon="@drawable/google_drive_svgrepo_com" />
+
+    </group>
+
+</menu>
